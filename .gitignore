@@ -1,0 +1,8 @@
+.env
+/.osp/
+/logs/
+/vendor/
+/src/
+/uploads/
+composer.phar
+composer.lock
