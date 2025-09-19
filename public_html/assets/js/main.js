@@ -1,0 +1,1 @@
+console.log("Main JS loaded. Individual modules should handle their logic.");

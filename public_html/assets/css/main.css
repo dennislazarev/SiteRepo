@@ -1,0 +1,224 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+    /* height: 100vh; лучше не использовать, может вызвать проблемы скролла */
+    min-height: 100vh; /* Минимальная высота - 100% высоты окна */
+    display: flex; /* Сделаем body flex-контейнером */
+    flex-direction: column; /* Располагаем дочерние элементы вертикально */
+}
+
+.app-header {
+    background: #191970;
+    height: 60px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    /* Добавим ширину, чтобы он не "прыгал" при скролле */
+    width: 100%;
+}
+
+.app-footer {
+    background: #191970;
+    height: 60px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    /* Добавим ширину, чтобы он не "прыгал" при скролле */
+    width: 100%;
+}
+
+/* Контейнер для фиксированных алертов */
+.alert-container {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    width: auto;
+    max-width: 90%;
+    min-width: 300px;
+}
+
+.alert {
+    position: relative;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    display: flex; /* Основной контейнер алерта - flex */
+    align-items: flex-start; /* Выравнивание элементов по верхнему краю по умолчанию, но .alert-content центрирует */
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    width: fit-content;
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.alert-content {
+    display: flex;
+    align-items: center; /* Центрирует иконку и текст по вертикали */
+    flex-grow: 1;
+}
+
+.alert-icon {
+    font-size: 1.2em;
+    width: 1.2em;
+    text-align: center;
+}
+
+.alert-text {
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.alert-dismissible .btn-close {
+    padding: 0;
+    position: relative;
+}
+
+/* Ключевое изменение для центрирования крестика */
+.alert > .btn-close {
+    /* Убираем margin-left: auto, так как это мешало центрированию */
+    align-self: center; /* Центрируем кнопку по вертикали относительно всего алерта */
+    padding: 0.25rem;
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    border: 0;
+    border-radius: 0.375rem;
+    opacity: 0.5;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+    flex-shrink: 0; /* Запрещаем кнопке сжиматься */
+    margin-top: 0; /* Убираем предыдущие корректировки */
+    margin-bottom: 0;
+}
+
+.alert > .btn-close:hover {
+    opacity: 0.75;
+}
+
+.main-content-wrapper {
+    /* Отступы для фиксированного хедера и футера */
+    margin-top: 60px; /* Высота хедера */
+    margin-bottom: 60px; /* Высота футера */
+    /* flex-grow: 1; - заставляет элемент занимать всё доступное пространство между хедером и футером */
+    flex-grow: 1; 
+    /* overflow-y: auto; - включает скролл, если содержимое больше */
+    overflow-y: auto;
+    /* padding: 1rem; - внутренние отступы */
+    padding: 1rem;
+    /* box-sizing: border-box; - включено в нормализации Bootstrap, но не повредит */
+    box-sizing: border-box;
+    /* width: 100%; - растягиваем на всю ширину */
+    width: 100%;
+}
+
+.header-dropdown {
+    inset: 10px auto auto 0px!important;
+}
+
+.required-label::after {
+    content: " *";
+    color: red;
+}
+
+.sort-icons {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 0.5em;
+    position: relative;
+    vertical-align: middle;
+}
+
+.sort-icons .sort-asc,
+.sort-icons .sort-desc {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    color: #adb5bd; /* Цвет по умолчанию (серый) */
+    transition: color 0.2s ease;
+    opacity: 0.7; /* По умолчанию полупрозрачные */
+}
+
+.sort-icons .sort-asc {
+    top: -0.1em; /* Слегка поднимаем вверх */
+}
+
+.sort-icons .sort-desc {
+    bottom: -0.1em; /* Слегка опускаем вниз */
+}
+
+/* Стили для активных индикаторов */
+.sortable.asc .sort-icons .sort-asc {
+    color: #0d6efd; /* Цвет активной стрелки вверх (синий Bootstrap) */
+    opacity: 1;
+}
+
+.sortable.desc .sort-icons .sort-desc {
+    color: #0d6efd; /* Цвет активной стрелки вниз (синий Bootstrap) */
+    opacity: 1;
+}
+
+.filter-input-wrapper {
+    position: relative;
+    width: 100%; /* Чтобы ширина, установленная JS, применялась к обертке */
+    display: inline-block;
+}
+
+.filter-input-wrapper .filter-element {
+    padding-right: 30px; /* Место для крестика */
+    /* Ширина будет устанавливаться на обертку, а не на input напрямую в JS */
+}
+
+.filter-input-wrapper .clear-filter {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+    font-size: 24px;
+    line-height: 1;
+    display: none; /* Скрываем по умолчанию */
+}
+
+.filter-input-wrapper .clear-filter:hover {
+    color: #333;
+}
+
+.filter-input-wrapper.has-value .clear-filter {
+    display: block; /* Показываем, если есть значение */
+}
+
+.btn-actions {
+    width: 50px;
+}
+
+.actions-cell {
+    width: 200px;
+}
+
+.system-cell {
+    width: 150px;
+}
+
+.login-cell {
+    width: 300px;
+}
+
+.ids-cell {
+    width: 100px;
+}
+
+.alert {
+    align-items: center;
+}

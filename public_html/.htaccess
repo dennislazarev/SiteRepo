@@ -1,0 +1,38 @@
+# /project-root/public/.htaccess
+
+# Запрещаем листинг файлов
+Options -Indexes
+
+# Включаем URL-rewriting
+RewriteEngine On
+
+# Если запрос идет к favicon.ico, и файл не существует, перенаправляем на заглушку или возвращаем 404
+# Это предотвратит попадание favicon.ico в правило ниже, если он отсутствует.
+# Вы можете адаптировать путь к реальному favicon или убрать, если он есть.
+# RewriteCond %{REQUEST_FILENAME} favicon\.ico$
+# RewriteRule ^ - [L] # Пример: пропустить favicon.ico, если он существует
+
+# Основное правило: если файл или папка НЕ существует, перенаправляем на index.php
+# Исключаем /uploads/, так как к нему может быть отдельный доступ через PHP контроллер
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/uploads/
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Запрещаем доступ к .env
+<Files ".env">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Запрещаем доступ к .git
+<Files ".git">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Безопасность: запрещаем выполнение PHP в /uploads (если папка физически здесь)
+# Рекомендуется также настроить это на уровне сервера или .htaccess в /uploads
+# <Directory "/uploads">
+#     php_flag engine off
+# </Directory>
